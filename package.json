@@ -1,0 +1,22 @@
+{
+  "name": "autogeneration_of_api_test_cases_using_playwright",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "convert": "node convertCollections.js",
+    "test": "npx playwright test"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.45.0",
+    "axios": "^1.7.2",
+    "playwright": "^1.44.1"
+  },
+  "directories": {
+    "test": "tests"
+  },
+  "description": ""
+}
