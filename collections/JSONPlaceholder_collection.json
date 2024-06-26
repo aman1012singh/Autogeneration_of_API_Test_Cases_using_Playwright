@@ -1,13 +1,58 @@
 {
 	"info": {
 		"_postman_id": "c1825012-c47a-43bf-8c32-2e762fd286e8",
-		"name": "Sample API Collection",
+		"name": "JSONPlaceholder",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "36487408"
 	},
 	"item": [
 		{
 			"name": "Get User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"// Test: Verify the response status code is 200 OK\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"// Test: Verify each object in the response array has required fields\r",
+							"pm.test(\"Response body has required fields\", function () {\r",
+							"    // Parse JSON response body\r",
+							"    const responseBody = pm.response.json();\r",
+							"\r",
+							"    // Ensure response body is an array\r",
+							"    pm.expect(responseBody).to.be.an('array');\r",
+							"\r",
+							"    // Iterate through each object in the array\r",
+							"    responseBody.forEach(function(user) {\r",
+							"        // Assert that specific fields exist in each user object\r",
+							"        pm.expect(user).to.have.property('id');\r",
+							"        pm.expect(user).to.have.property('name');\r",
+							"        pm.expect(user).to.have.property('email');\r",
+							"        //Check for a specific user ID (assuming ID 1 exists in the response)\r",
+							"        if (user.id === 1) {\r",
+							"            pm.test(`User with ID ${user.id} exists`, function() {\r",
+							"                pm.expect(user.name).to.equal('Leanne Graham');\r",
+							"                pm.expect(user.email).to.equal('Sincere@april.biz');\r",
+							"            });\r",
+							"        }\r",
+							"    });\r",
+							"});\r",
+							"\r",
+							"// Test: Verify response time is less than 500ms\r",
+							"pm.test(\"Response time is less than 2500ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(2500);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -28,6 +73,46 @@
 		},
 		{
 			"name": "Get Posts",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"// Test: Verify the response status code is 200 OK\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"// Test: Verify each object in the response array has required fields\r",
+							"pm.test(\"Response body has required fields\", function () {\r",
+							"    // Parse JSON response body\r",
+							"    const responseBody = pm.response.json();\r",
+							"\r",
+							"    // Ensure response body is an array\r",
+							"    pm.expect(responseBody).to.be.an('array');\r",
+							"\r",
+							"    // Iterate through each object in the array\r",
+							"    responseBody.forEach(function(user) {\r",
+							"        // Assert that specific fields exist in each user object\r",
+							"         pm.expect(user).to.have.property('userId')\r",
+							"        pm.expect(user).to.have.property('id');\r",
+							"        pm.expect(user).to.have.property('title');\r",
+							"        pm.expect(user).to.have.property('body');\r",
+							"       \r",
+							"    });\r",
+							"});\r",
+							"\r",
+							"// Test: Verify response time is less than 500ms\r",
+							"pm.test(\"Response time is less than 2500ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(2500);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -48,6 +133,44 @@
 		},
 		{
 			"name": "Create Post",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Test: Verify the response status code is 201 Created\r",
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"// Test: Verify the response body has required fields and values\r",
+							"pm.test(\"Response body has required fields and values\", function () {\r",
+							"    // Parse JSON response body\r",
+							"    const responseBody = pm.response.json();\r",
+							"\r",
+							"    // Assert that specific fields exist in the response\r",
+							"    pm.expect(responseBody).to.have.property('title');\r",
+							"    pm.expect(responseBody).to.have.property('body');\r",
+							"    pm.expect(responseBody).to.have.property('userId');\r",
+							"    pm.expect(responseBody).to.have.property('id');\r",
+							"\r",
+							"    // Assert the values of the fields\r",
+							"    pm.expect(responseBody.title).to.equal('POSTING DATA');\r",
+							"    pm.expect(responseBody.body).to.equal('post request is executed');\r",
+							"    pm.expect(responseBody.userId).to.equal(1);\r",
+							"    pm.expect(responseBody.id).to.equal(101);\r",
+							"});\r",
+							"\r",
+							"// Test: Verify response time is less than 500ms\r",
+							"pm.test(\"Response time is less than 2500ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(2500);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "POST",
 				"header": [],

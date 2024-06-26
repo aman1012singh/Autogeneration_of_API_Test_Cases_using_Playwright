@@ -6,6 +6,31 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const collectionsDir = path.join(__dirname, 'collections');
 
+// Function to parse and convert Postman test assertions
+function convertPostmanTests(postmanTests) {
+    const convertedTests = [];
+
+    postmanTests.forEach(test => {
+        if (test.type === 'test') {
+            test.script.exec.forEach(line => {
+                // Simple conversion of basic assertions (expand as needed)
+                if (line.includes('pm.expect')) {
+                    const playwrightLine = line
+                        .replace(/pm\.expect/g, 'expect')
+                        .replace(/\.to\./g, '.toBe.')
+                        .replace(/have\.(property|status)/g, 'toHave$1');
+                    convertedTests.push(playwrightLine);
+                }
+            });
+        }
+    });
+
+    return convertedTests.join('\n');
+}
+
+
+
+
 async function convertCollections() {
     try {
         // Read the list of files in the 'collections' directory
@@ -18,8 +43,11 @@ async function convertCollections() {
             const collectionData = await fs.readFile(collectionFile, 'utf8');
             const collection = JSON.parse(collectionData);
 
-            // Parse the collection to extract requests
+            // Parse the collection to extract requests and associated tests
             const requests = collection.item.map(item => {
+                const postmanTests = item.event || [];
+                const convertedTests = convertPostmanTests(postmanTests);
+
                 return {
                     name: item.name,
                     method: item.request.method,
@@ -28,10 +56,10 @@ async function convertCollections() {
                         acc[header.key] = header.value;
                         return acc;
                     }, {}) : {},
-                    body: item.request.body ? JSON.stringify(item.request.body[Object.keys(item.request.body)[0]]) : null
+                    body: item.request.body ? JSON.stringify(item.request.body[Object.keys(item.request.body)[0]]) : null,
+                    tests: convertedTests
                 };
             });
-
             // Generate Playwright test script
             const testScript = `
                 import { test, expect } from '@playwright/test';
@@ -45,7 +73,8 @@ async function convertCollections() {
                         });
                         expect(response.status()).toBe(${request.method === 'POST' ? 201 : 200});
                         const responseBody = await response.json();
-                        // Add more detailed assertions here if needed
+                         // Playwright assertions based on Postman tests
+                        ${request.tests}
                     });
                     `).join('')}
                 });

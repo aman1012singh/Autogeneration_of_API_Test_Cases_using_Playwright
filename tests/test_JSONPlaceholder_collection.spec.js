@@ -10,7 +10,8 @@
                         });
                         expect(response.status()).toBe(200);
                         const responseBody = await response.json();
-                        // Add more detailed assertions here if needed
+                         // Playwright assertions based on Postman tests
+                        
                     });
                     
                     test('Get Posts', async ({ request }) => {
@@ -20,7 +21,8 @@
                         });
                         expect(response.status()).toBe(200);
                         const responseBody = await response.json();
-                        // Add more detailed assertions here if needed
+                         // Playwright assertions based on Postman tests
+                        
                     });
                     
                     test('Create Post', async ({ request }) => {
@@ -30,7 +32,8 @@
                         });
                         expect(response.status()).toBe(201);
                         const responseBody = await response.json();
-                        // Add more detailed assertions here if needed
+                         // Playwright assertions based on Postman tests
+                        
                     });
                     
                 });
