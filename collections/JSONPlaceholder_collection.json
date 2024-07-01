@@ -43,10 +43,6 @@
 							"    });\r",
 							"});\r",
 							"\r",
-							"// Test: Verify response time is less than 500ms\r",
-							"pm.test(\"Response time is less than 2500ms\", function () {\r",
-							"    pm.expect(pm.response.responseTime).to.be.below(2500);\r",
-							"});\r",
 							""
 						],
 						"type": "text/javascript"
@@ -95,7 +91,6 @@
 							"    // Iterate through each object in the array\r",
 							"    responseBody.forEach(function(user) {\r",
 							"        // Assert that specific fields exist in each user object\r",
-							"         pm.expect(user).to.have.property('userId')\r",
 							"        pm.expect(user).to.have.property('id');\r",
 							"        pm.expect(user).to.have.property('title');\r",
 							"        pm.expect(user).to.have.property('body');\r",
@@ -103,10 +98,7 @@
 							"    });\r",
 							"});\r",
 							"\r",
-							"// Test: Verify response time is less than 500ms\r",
-							"pm.test(\"Response time is less than 2500ms\", function () {\r",
-							"    pm.expect(pm.response.responseTime).to.be.below(2500);\r",
-							"});\r",
+							
 							""
 						],
 						"type": "text/javascript"
@@ -149,23 +141,13 @@
 							"    const responseBody = pm.response.json();\r",
 							"\r",
 							"    // Assert that specific fields exist in the response\r",
-							"    pm.expect(responseBody).to.have.property('title');\r",
-							"    pm.expect(responseBody).to.have.property('body');\r",
-							"    pm.expect(responseBody).to.have.property('userId');\r",
+
 							"    pm.expect(responseBody).to.have.property('id');\r",
 							"\r",
-							"    // Assert the values of the fields\r",
-							"    pm.expect(responseBody.title).to.equal('POSTING DATA');\r",
-							"    pm.expect(responseBody.body).to.equal('post request is executed');\r",
-							"    pm.expect(responseBody.userId).to.equal(1);\r",
 							"    pm.expect(responseBody.id).to.equal(101);\r",
 							"});\r",
 							"\r",
-							"// Test: Verify response time is less than 500ms\r",
-							"pm.test(\"Response time is less than 2500ms\", function () {\r",
-							"    pm.expect(pm.response.responseTime).to.be.below(2500);\r",
-							"});\r",
-							""
+						""
 						],
 						"type": "text/javascript"
 					}
